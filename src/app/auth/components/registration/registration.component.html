@@ -1,5 +1,329 @@
-<div
-  class="h-screen w-screen dark:bg-black dark:text-white bg-white text-black"
->
-  <div class="columns-2"></div>
+<div class="h-screen w-screen e text-black">
+  <div class="flex h-full">
+    <div class="hidden h-full w-[75%] pl-5 lg:flex items-center justify-center">
+      <img
+        src="../../../../assets/register-image.jpg"
+        alt="saloon image"
+        srcset=""
+        class="h-[95vh] w-[100%] rounded-xl object-cover"
+      />
+    </div>
+
+    <div class="sm:flex md:p-5 sm:h-screen lg:w-[50%] p-5 w-full h-full">
+      <div
+        class="h-auto pb-3 sm:h-full sm:pb-0 w-full border border-black rounded-lg"
+      >
+        <div class="flex items-center flex-col gap-0">
+          <img
+            src="../../../../assets/logo-min.png"
+            alt="logo"
+            class="h-[100px] w-[100px]"
+          />
+          <p>Welcome to trimly</p>
+          <h1>Registration Page</h1>
+        </div>
+        <form [formGroup]="registrationFormData">
+          <div class="flex items-center justify-center px-5">
+            <mat-button-toggle-group
+              name="role"
+              aria-label="Font Style"
+              formControlName="role"
+            >
+              <mat-button-toggle value="user" class="w-52"
+                ><Span class="">General User</Span></mat-button-toggle
+              >
+              <mat-button-toggle value="barber" class="w-52"
+                ><span>Have a Shop?</span></mat-button-toggle
+              >
+            </mat-button-toggle-group>
+          </div>
+
+          <div
+            *ngIf="
+              registrationFormData.get('role')?.hasError('required') &&
+              registrationFormData.get('role')?.touched
+            "
+          >
+            <p class="text-center text-red-500 text-sm mt-1">
+              Role is required
+            </p>
+          </div>
+
+          <div class="lg:mt-8 mt-5 px-5 flex flex-col">
+            <div class="flex sm:gap-3 flex-wrap md:flex-nowrap">
+              <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter Your First Name</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Your First Name"
+                  formControlName="firstName"
+                />
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error
+                  *ngIf="registrationFormData.hasError('required', 'firstName')"
+                  >First Name is Required</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter Your Last Name</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Your Last Name"
+                  formControlName="lastName"
+                />
+                <mat-icon matSuffix>person_add</mat-icon>
+                <mat-error
+                  *ngIf="registrationFormData.hasError('required', 'lastName')"
+                  >Last Name is Required</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <div class="flex sm:gap-3 flex-wrap md:flex-nowrap">
+              <mat-form-field class="w-full">
+                <mat-label>Select Your Gender</mat-label>
+                <mat-select formControlName="gender">
+                  <mat-option value="male">Male</mat-option>
+                  <mat-option value="female">Female</mat-option>
+                  <mat-option value="others">Others</mat-option>
+                </mat-select>
+                <mat-icon matSuffix>transgender</mat-icon>
+                <mat-error
+                  *ngIf="registrationFormData.hasError('required', 'gender')"
+                  >Gender is Required</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter Your City</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Your City"
+                  formControlName="city"
+                />
+                <mat-icon matSuffix>location_city</mat-icon>
+                <mat-error
+                  *ngIf="registrationFormData.hasError('required', 'city')"
+                  >City is Required</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <div class="flex sm:gap-3 flex-wrap md:flex-nowrap">
+              <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter Your Phone Number</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Your Phone Number"
+                  formControlName="phoneNumber"
+                />
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-error
+                  *ngIf="
+                    registrationFormData.hasError('required', 'phoneNumber')
+                  "
+                  >Phone Number is Required</mat-error
+                >
+
+                <mat-error
+                  *ngIf="
+                    registrationFormData.hasError('pattern', 'phoneNumber')
+                  "
+                  >Invalid Phone Number</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter Your Email Address</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Your Email Address"
+                  formControlName="emailAddress"
+                />
+                <mat-icon matSuffix>mail</mat-icon>
+                <mat-error
+                  *ngIf="
+                    registrationFormData.hasError('required', 'emailAddress')
+                  "
+                  >Email Address is Required</mat-error
+                >
+
+                <mat-error
+                  *ngIf="registrationFormData.hasError('email', 'emailAddress')"
+                  >Invalid Email Address</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <div
+              class="flex sm:gap-3 flex-wrap md:flex-nowrap"
+              [ngClass]="{
+              'mb-0':
+                registrationFormData.hasError('pattern', 'password') &&
+                registrationFormData.hasError('minlength', 'password'),
+                'sm:mb-6':
+                registrationFormData.hasError('pattern', 'password') &&
+                registrationFormData.hasError('minlength', 'password'),
+                
+            }"
+            >
+              <mat-form-field
+                appearance="fill"
+                class="w-full"
+                [ngClass]="{
+                'mb-6':
+                  registrationFormData.hasError('pattern', 'password') &&
+                  registrationFormData.hasError('minlength', 'password'),
+                  'sm:mb-0': registrationFormData.hasError('pattern', 'password') &&
+                  registrationFormData.hasError('minlength', 'password'),
+                  
+              }"
+              >
+                <mat-label>Enter Your Password</mat-label>
+                <input
+                  matInput
+                  formControlName="password"
+                  [type]="passwordHide ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  type="button"
+                  matSuffix
+                  (click)="passwordHide = !passwordHide"
+                >
+                  <mat-icon>{{
+                    passwordHide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+
+                <mat-error
+                  *ngIf="registrationFormData.hasError('required', 'password')"
+                >
+                  Password is Required
+                </mat-error>
+
+                <mat-error
+                  *ngIf="registrationFormData.hasError('minlength', 'password')"
+                >
+                  Password Should be Atleast 8 Character
+                </mat-error>
+
+                <mat-error
+                  *ngIf="registrationFormData.hasError('pattern', 'password')"
+                >
+                  Require 1 Uppercase and 1 special Character
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter Your Confirm Password</mat-label>
+                <input
+                  matInput
+                  formControlName="confirmPassword"
+                  [type]="confirmPasswordHide ? 'password' : 'text'"
+                />
+
+                <button
+                  mat-icon-button
+                  type="button"
+                  matSuffix
+                  (click)="confirmPasswordHide = !confirmPasswordHide"
+                >
+                  <mat-icon>{{
+                    confirmPasswordHide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+                <mat-error
+                  *ngIf="
+                    registrationFormData.hasError('required', 'confirmPassword')
+                  "
+                  >Confirm Password is Required
+                </mat-error>
+
+                <mat-error
+                  *ngIf="
+                    registrationFormData.hasError(
+                      'passwordMismatch',
+                      'confirmPassword'
+                    )
+                  "
+                >
+                  Passwords are not matching
+                </mat-error>
+                <mat-error *ngIf="false">&nbsp;</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div
+              class="flex sm:gap-3 flex-wrap md:flex-nowrap items-stretch mb-1 sm:justify-between"
+            >
+              <div class="">
+                <mat-checkbox
+                  color="primary"
+                  formControlName="termAndConditions"
+                  >Accept the term and condition</mat-checkbox
+                >
+                <mat-error
+                  *ngIf="
+                    registrationFormData
+                      .get('termAndConditions')
+                      ?.hasError('required') &&
+                    registrationFormData.get('termAndConditions')?.touched
+                  "
+                >
+                  <span class="ml-5 text-xs"
+                    >You must agree to the terms and conditions.</span
+                  >
+                </mat-error>
+              </div>
+              <div class="flex items-center pr-3 pl-3 py-2 sm:py-0 sm:pl-0">
+                <span class="flex items-center">forgot password</span>
+              </div>
+            </div>
+
+            <div class="flex justify-center flex-col w-full gap-2">
+              <button
+                mat-raised-button
+                color="primary"
+                class="w-full"
+                [disabled]="registrationFormData.valid"
+                (click)="Submit()"
+              >
+                Register
+              </button>
+
+              <p class="text-center text-gray-400">
+                Already have an account?
+                <span class="cursor-pointer text-black" routerLink="../login"
+                  >Sign In</span
+                >
+              </p>
+
+              <div class="flex w-full justify-center items-center gap-2">
+                <div class="border-b-2 w-full border-gray-300"></div>
+                <span class="text-gray-400">Or</span>
+                <div class="border-b-2 w-full border-gray-300"></div>
+              </div>
+              <button
+                mat-stroked-button
+                type="button"
+                class=""
+                (click)="signInWithGoogle()"
+              >
+                <span class="flex items-center justify-center gap-3">
+                  <img
+                    src="../../../../assets/google-icon.png"
+                    alt=""
+                    srcset=""
+                  />
+                  Sign in with Google
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
