@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -12,7 +13,10 @@ import {
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private toaster: ToastrService
+  ) {}
   passwordHide: Boolean = true;
   confirmPasswordHide: Boolean = true;
   registrationFormData!: FormGroup;
@@ -55,7 +59,18 @@ export class RegistrationComponent implements OnInit {
       return;
     } else {
       console.log(this.registrationFormData.value);
-      this.getFormData();
+      this.registrationFormData.reset({
+        firstName: '',
+        lastName: '',
+        gender: '',
+        city: '',
+        phoneNumber: '',
+        emailAddress: '',
+        password: '',
+        confirmPassword: '',
+        role: 'user',
+        termAndConditions: true,
+      });
     }
   }
 
