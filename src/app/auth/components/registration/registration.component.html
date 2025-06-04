@@ -41,7 +41,8 @@
           <div
             *ngIf="
               registrationFormData.get('role')?.hasError('required') &&
-              registrationFormData.get('role')?.touched
+              registrationFormData.get('role')?.touched &&
+              registrationFormData.get('role')?.dirty
             "
           >
             <p class="text-center text-red-500 text-sm mt-1">
@@ -255,50 +256,41 @@
               </mat-form-field>
             </div>
 
-            <div
-              class="flex sm:gap-3 flex-wrap md:flex-nowrap items-stretch mb-1 sm:justify-between"
-            >
-              <div class="">
-                <mat-checkbox
-                  color="primary"
-                  formControlName="termAndConditions"
-                  >Accept the term and condition</mat-checkbox
+            <div class="">
+              <mat-checkbox color="primary" formControlName="termAndConditions"
+                >Accept the term and condition</mat-checkbox
+              >
+              <mat-error
+                *ngIf="
+                  registrationFormData
+                    .get('termAndConditions')
+                    ?.hasError('required') &&
+                  registrationFormData.get('termAndConditions')?.touched
+                "
+              >
+                <span class="ml-5 text-xs"
+                  >You must agree to the terms and conditions.</span
                 >
-                <mat-error
-                  *ngIf="
-                    registrationFormData
-                      .get('termAndConditions')
-                      ?.hasError('required') &&
-                    registrationFormData.get('termAndConditions')?.touched
-                  "
-                >
-                  <span class="ml-5 text-xs"
-                    >You must agree to the terms and conditions.</span
-                  >
-                </mat-error>
-              </div>
-              <div class="flex items-center pr-3 pl-3 py-2 sm:py-0 sm:pl-0">
-                <span class="flex items-center">forgot password</span>
-              </div>
+              </mat-error>
             </div>
 
-            <div class="flex justify-center flex-col w-full gap-2">
+            <div class="flex justify-center flex-col w-full gap-3">
               <button
                 mat-raised-button
                 color="primary"
                 class="w-full"
-                [disabled]="registrationFormData.valid"
+                [disabled]="registrationFormData.invalid"
                 (click)="Submit()"
               >
                 Register
               </button>
 
-              <p class="text-center text-gray-400">
+              <div class="text-center text-gray-400">
                 Already have an account?
                 <span class="cursor-pointer text-black" routerLink="../login"
                   >Sign In</span
                 >
-              </p>
+              </div>
 
               <div class="flex w-full justify-center items-center gap-2">
                 <div class="border-b-2 w-full border-gray-300"></div>
