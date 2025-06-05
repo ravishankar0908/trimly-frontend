@@ -1,15 +1,19 @@
-<div class="h-screen w-screen e text-black">
+<div class="h-screen w-screen text-black">
   <div class="flex h-full">
-    <div class="hidden h-full w-[75%] pl-5 lg:flex items-center justify-center">
+    <div
+      class="hidden h-full lg:w-[75%] pl-5 lg:flex items-center justify-center"
+    >
       <img
         src="../../../../assets/register-image.jpg"
         alt="saloon image"
         srcset=""
-        class="h-[95vh] w-[100%] rounded-xl object-cover"
+        class="h-[95vh] w-[100%] rounded-lg object-cover"
       />
     </div>
 
-    <div class="sm:flex md:p-5 sm:h-screen lg:w-[50%] p-5 w-full h-full">
+    <div
+      class="sm:flex sm:h-screen lg:w-[50%] p-5 py-8 xl:py-5 w-full h-full overflow-x-auto justify-center items-center"
+    >
       <div
         class="h-auto pb-3 sm:h-full sm:pb-0 w-full border border-black rounded-lg"
       >
@@ -51,7 +55,7 @@
           </div>
 
           <div class="lg:mt-8 mt-5 px-5 flex flex-col">
-            <div class="flex sm:gap-3 flex-wrap md:flex-nowrap">
+            <div class="flex sm:gap-3 flex-wrap xl:flex-nowrap">
               <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Enter Your First Name</mat-label>
                 <input
@@ -81,7 +85,7 @@
               </mat-form-field>
             </div>
 
-            <div class="flex sm:gap-3 flex-wrap md:flex-nowrap">
+            <div class="flex sm:gap-3 flex-wrap xl:flex-nowrap">
               <mat-form-field class="w-full">
                 <mat-label>Select Your Gender</mat-label>
                 <mat-select formControlName="gender">
@@ -111,7 +115,7 @@
               </mat-form-field>
             </div>
 
-            <div class="flex sm:gap-3 flex-wrap md:flex-nowrap">
+            <div class="flex sm:gap-3 flex-wrap xl:flex-nowrap">
               <mat-form-field appearance="fill" class="w-full">
                 <mat-label>Enter Your Phone Number</mat-label>
                 <input
@@ -158,7 +162,7 @@
             </div>
 
             <div
-              class="flex sm:gap-3 flex-wrap md:flex-nowrap"
+              class="flex sm:gap-3 flex-wrap xl:flex-nowrap"
               [ngClass]="{
               'mb-0':
                 registrationFormData.hasError('pattern', 'password') &&
@@ -177,6 +181,10 @@
                   registrationFormData.hasError('pattern', 'password') &&
                   registrationFormData.hasError('minlength', 'password'),
                   'sm:mb-0': registrationFormData.hasError('pattern', 'password') &&
+                  registrationFormData.hasError('minlength', 'password'),
+                  'lg:mb-6': registrationFormData.hasError('pattern', 'password') &&
+                  registrationFormData.hasError('minlength', 'password'),
+                  'xl:mb-0': registrationFormData.hasError('pattern', 'password') &&
                   registrationFormData.hasError('minlength', 'password'),
                   
               }"
@@ -291,27 +299,6 @@
                   >Sign In</span
                 >
               </div>
-
-              <div class="flex w-full justify-center items-center gap-2">
-                <div class="border-b-2 w-full border-gray-300"></div>
-                <span class="text-gray-400">Or</span>
-                <div class="border-b-2 w-full border-gray-300"></div>
-              </div>
-              <button
-                mat-stroked-button
-                type="button"
-                class=""
-                (click)="signInWithGoogle()"
-              >
-                <span class="flex items-center justify-center gap-3">
-                  <img
-                    src="../../../../assets/google-icon.png"
-                    alt=""
-                    srcset=""
-                  />
-                  Sign in with Google
-                </span>
-              </button>
             </div>
           </div>
         </form>

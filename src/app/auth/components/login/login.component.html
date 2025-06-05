@@ -1,2 +1,135 @@
-<p>login works!</p>
-<button type="button" routerLink="../registration">register</button>
+<div class="h-screen w-screen e text-black">
+  <div class="flex h-full">
+    <div class="hidden h-full w-[75%] pl-5 lg:flex items-center justify-center">
+      <img
+        src="../../../../assets/register-image.jpg"
+        alt="saloon image"
+        srcset=""
+        class="h-[95vh] w-[100%] rounded-xl object-cover"
+      />
+    </div>
+
+    <div
+      class="sm:flex sm:h-screen lg:w-[50%] p-5 py-8 xl:py-5 w-full h-full overflow-x-auto justify-center items-center"
+    >
+      <div
+        class="h-full pb-3 sm:h-full sm:pb-0 w-full border border-black rounded-lg flex flex-col justify-center"
+      >
+        <div class="flex items-center flex-col gap-0">
+          <img
+            src="../../../../assets/logo-min.png"
+            alt="logo"
+            class="h-[100px] w-[100px]"
+          />
+          <p>Welcome to trimly</p>
+          <h1>Login Page</h1>
+        </div>
+        <form [formGroup]="loginFormData">
+          <div class="lg:mt-8 mt-5 px-5">
+            <div class="w-full">
+              <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter Your Email Address</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Your Email Address"
+                  formControlName="emailAddress"
+                />
+                <mat-icon matSuffix>mail</mat-icon>
+                <mat-error
+                  *ngIf="loginFormData.hasError('required', 'emailAddress')"
+                  >Email Address is Required</mat-error
+                >
+
+                <mat-error
+                  *ngIf="loginFormData.hasError('email', 'emailAddress')"
+                  >Invalid Email Address</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter Your Password</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Your Password"
+                  formControlName="password"
+                  [type]="passwordHide ? 'password' : 'text'"
+                />
+
+                <button
+                  mat-icon-button
+                  type="button"
+                  matSuffix
+                  (click)="passwordHide = !passwordHide"
+                >
+                  <mat-icon>{{
+                    passwordHide ? "visibility_off" : "visibility"
+                  }}</mat-icon>
+                </button>
+                <mat-error
+                  *ngIf="loginFormData.hasError('required', 'password')"
+                  >Password is Required
+                </mat-error>
+
+                <mat-error
+                  *ngIf="loginFormData.hasError('minlength', 'password')"
+                  >Minimum 8 characters are required
+                </mat-error>
+
+                <mat-error
+                  *ngIf="loginFormData.hasError('maxlength', 'password')"
+                  >Maximum length is 16 characters
+                </mat-error>
+              </mat-form-field>
+
+              <span class="float-right mb-3 text-gray-500 cursor-pointer"
+                >Forgot Password?</span
+              >
+            </div>
+
+            <div class="flex justify-center flex-col w-full gap-3">
+              <button
+                mat-raised-button
+                color="primary"
+                class="w-full"
+                [disabled]="loginFormData.invalid"
+                (click)="Submit()"
+              >
+                Login
+              </button>
+
+              <div class="text-center text-gray-400">
+                Don't Have an Account?
+                <span
+                  class="cursor-pointer text-black"
+                  routerLink="../registration"
+                  >Sign Up</span
+                >
+              </div>
+
+              <div class="flex w-full justify-center items-center gap-2">
+                <div class="border-b-2 w-full border-gray-300"></div>
+                <span class="text-gray-400">Or</span>
+                <div class="border-b-2 w-full border-gray-300"></div>
+              </div>
+              <button
+                mat-stroked-button
+                type="button"
+                class=""
+                (click)="signInWithGoogle()"
+              >
+                <span class="flex items-center justify-center gap-3">
+                  <img
+                    src="../../../../assets/google-icon.png"
+                    alt=""
+                    srcset=""
+                  />
+                  Sign in with Google
+                </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
