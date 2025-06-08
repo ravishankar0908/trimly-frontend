@@ -6,6 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { UserRegistrationModel } from '../../models/user.registration.model';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -15,62 +18,81 @@ import { ToastrService } from 'ngx-toastr';
 export class RegistrationComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private authService: AuthService,
+    private router: Router
   ) {}
-  passwordHide: Boolean = true;
-  confirmPasswordHide: Boolean = true;
+  passwordHide: boolean = true;
+  confirmPasswordHide: boolean = true;
+  user: boolean = true;
+
   registrationFormData!: FormGroup;
 
   ngOnInit(): void {
     this.getFormData();
   }
 
-  getFormData() {
-    this.registrationFormData = this.formBuilder.group(
-      {
-        firstName: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
-        gender: ['', [Validators.required]],
-        city: ['', [Validators.required]],
-        phoneNumber: [
-          '',
-          [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],
-        ],
-        emailAddress: ['', [Validators.required, Validators.email]],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(/^(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/),
-            Validators.minLength(8),
-          ],
-        ],
-        confirmPassword: ['', [Validators.required]],
-        role: ['user', [Validators.required]],
-        termAndConditions: [true, Validators.requiredTrue],
-      },
-      { validators: this.passwordMatchValidator }
-    );
+  OnroleChange(event: any) {
+    if (event.value === 'shopowner') {
+      this.user = false;
+    }
+    if (event.value === 'user') {
+      this.user = true;
+    }
+    this.getFormData();
   }
 
-  Submit() {
-    if (this.registrationFormData.invalid) {
-      this.registrationFormData.markAllAsTouched();
-      return;
+  getFormData() {
+    if (this.user) {
+      this.registrationFormData = this.formBuilder.group(
+        {
+          firstName: ['', [Validators.required]],
+          lastName: ['', [Validators.required]],
+          gender: ['', [Validators.required]],
+          city: ['', [Validators.required]],
+          phoneNumber: [
+            '',
+            [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],
+          ],
+          emailAddress: ['', [Validators.required, Validators.email]],
+          password: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/),
+              Validators.minLength(8),
+            ],
+          ],
+          confirmPassword: ['', [Validators.required]],
+          role: ['user', [Validators.required]],
+          termAndConditions: [true, Validators.requiredTrue],
+        },
+        { validators: this.passwordMatchValidator }
+      );
     } else {
-      console.log(this.registrationFormData.value);
-      this.registrationFormData.reset({
-        firstName: '',
-        lastName: '',
-        gender: '',
-        city: '',
-        phoneNumber: '',
-        emailAddress: '',
-        password: '',
-        confirmPassword: '',
-        role: 'user',
-        termAndConditions: true,
-      });
+      this.registrationFormData = this.formBuilder.group(
+        {
+          shopName: ['', [Validators.required]],
+          city: ['', [Validators.required]],
+          phoneNumber: [
+            '',
+            [Validators.required, Validators.pattern(/^[6-9]\d{9}$/)],
+          ],
+          emailAddress: ['', [Validators.required, Validators.email]],
+          password: [
+            '',
+            [
+              Validators.required,
+              Validators.pattern(/^(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/),
+              Validators.minLength(8),
+            ],
+          ],
+          confirmPassword: ['', [Validators.required]],
+          role: ['shopowner', [Validators.required]],
+          termAndConditions: [true, Validators.requiredTrue],
+        },
+        { validators: this.passwordMatchValidator }
+      );
     }
   }
 
@@ -95,5 +117,38 @@ export class RegistrationComponent implements OnInit {
 
   signInWithGoogle() {
     alert('sign with google');
+  }
+
+  Submit() {
+    if (this.registrationFormData.invalid) {
+      this.registrationFormData.markAllAsTouched();
+      return;
+    } else {
+      // implement your service calling here
+      this.authService
+        .Registration(this.registrationFormData.value as UserRegistrationModel)
+        .subscribe(
+          (res) => {
+            this.toaster.success(res.message, 'success');
+            this.registrationFormData.reset();
+            this.registrationFormData.markAsUntouched();
+
+            this.registrationFormData.patchValue({
+              role: 'user',
+              termAndConditions: true,
+            });
+
+            //this.router.navigate(['auth/login']);
+          },
+          (err) => {
+            if (err.status === 409)
+              this.toaster.error(err.error.messages, 'error');
+            if (err.status === 406)
+              this.toaster.error(err.error.messages, 'error');
+            if (err.status === 500)
+              this.toaster.error(err.error.messages, 'error');
+          }
+        );
+    }
   }
 }

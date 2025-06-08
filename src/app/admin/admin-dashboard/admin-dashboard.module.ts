@@ -3,15 +3,20 @@ import { CommonModule } from '@angular/common';
 
 import { AdminDashboardRoutingModule } from './admin-dashboard-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-
+import {
+  CdkDrag,
+  CdkDragPlaceholder,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
 
 @NgModule({
-  declarations: [
-    DashboardComponent
-  ],
+  declarations: [DashboardComponent],
   imports: [
     CommonModule,
-    AdminDashboardRoutingModule
-  ]
+    AdminDashboardRoutingModule,
+    CdkDrag,
+    CdkDragPlaceholder,
+    CdkDropList,
+  ],
 })
-export class AdminDashboardModule { }
+export class AdminDashboardModule {}
