@@ -5,12 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-right',
@@ -18,7 +21,12 @@ import { ToastrModule } from 'ngx-toastr';
       closeButton: true,
     }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { appearance: 'outline' },
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

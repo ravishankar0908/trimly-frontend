@@ -1,0 +1,22 @@
+<mat-toolbar color="primary" class="flex justify-between">
+  <div class="flex items-center gap-3">
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="drawer.toggle()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Trimly</span>
+  </div>
+  <div class="mr-5">asd</div>
+</mat-toolbar>
+<mat-drawer-container class="h-[calc(100vh-65px)]">
+  <mat-drawer #drawer mode="side" opened class="w-[250px]"
+    ><app-side-bar
+  /></mat-drawer>
+  <mat-drawer-content class="py-6 px-10">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

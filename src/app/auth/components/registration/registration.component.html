@@ -32,11 +32,12 @@
               name="role"
               aria-label="Font Style"
               formControlName="role"
+              (change)="OnroleChange($event)"
             >
               <mat-button-toggle value="user" class="w-52"
                 ><Span class="">General User</Span></mat-button-toggle
               >
-              <mat-button-toggle value="barber" class="w-52"
+              <mat-button-toggle value="shopowner" class="w-52"
                 ><span>Have a Shop?</span></mat-button-toggle
               >
             </mat-button-toggle-group>
@@ -56,7 +57,7 @@
 
           <div class="lg:mt-8 mt-5 px-5 flex flex-col">
             <div class="flex sm:gap-3 flex-wrap xl:flex-nowrap">
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field class="w-full" *ngIf="user">
                 <mat-label>Enter Your First Name</mat-label>
                 <input
                   matInput
@@ -65,12 +66,16 @@
                 />
                 <mat-icon matSuffix>person</mat-icon>
                 <mat-error
-                  *ngIf="registrationFormData.hasError('required', 'firstName')"
+                  *ngIf="
+                    registrationFormData.hasError('required', 'firstName') &&
+                    (registrationFormData.get('firstName')?.touched ||
+                      registrationFormData.get('firstName')?.dirty)
+                  "
                   >First Name is Required</mat-error
                 >
               </mat-form-field>
 
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field class="w-full" *ngIf="user">
                 <mat-label>Enter Your Last Name</mat-label>
                 <input
                   matInput
@@ -79,14 +84,18 @@
                 />
                 <mat-icon matSuffix>person_add</mat-icon>
                 <mat-error
-                  *ngIf="registrationFormData.hasError('required', 'lastName')"
+                  *ngIf="
+                    registrationFormData.hasError('required', 'lastName') &&
+                    (registrationFormData.get('lastName')?.touched ||
+                      registrationFormData.get('lastName')?.dirty)
+                  "
                   >Last Name is Required</mat-error
                 >
               </mat-form-field>
             </div>
 
             <div class="flex sm:gap-3 flex-wrap xl:flex-nowrap">
-              <mat-form-field class="w-full">
+              <mat-form-field class="w-full" *ngIf="user">
                 <mat-label>Select Your Gender</mat-label>
                 <mat-select formControlName="gender">
                   <mat-option value="male">Male</mat-option>
@@ -95,12 +104,34 @@
                 </mat-select>
                 <mat-icon matSuffix>transgender</mat-icon>
                 <mat-error
-                  *ngIf="registrationFormData.hasError('required', 'gender')"
+                  *ngIf="
+                    registrationFormData.hasError('required', 'gender') &&
+                    (registrationFormData.get('gender')?.touched ||
+                      registrationFormData.get('gender')?.dirty)
+                  "
                   >Gender is Required</mat-error
                 >
               </mat-form-field>
 
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field class="w-full" *ngIf="!user">
+                <mat-label>Enter Your Shop Name</mat-label>
+                <input
+                  matInput
+                  placeholder="Enter Your Shop Name"
+                  formControlName="shopName"
+                />
+                <mat-icon matSuffix>add_business</mat-icon>
+                <mat-error
+                  *ngIf="
+                    registrationFormData.hasError('required', 'shopName') &&
+                    (registrationFormData.get('shopName')?.touched ||
+                      registrationFormData.get('shopName')?.dirty)
+                  "
+                  >First Name is Required</mat-error
+                >
+              </mat-form-field>
+
+              <mat-form-field class="w-full">
                 <mat-label>Enter Your City</mat-label>
                 <input
                   matInput
@@ -109,14 +140,18 @@
                 />
                 <mat-icon matSuffix>location_city</mat-icon>
                 <mat-error
-                  *ngIf="registrationFormData.hasError('required', 'city')"
+                  *ngIf="
+                    registrationFormData.hasError('required', 'city') &&
+                    (registrationFormData.get('city')?.touched ||
+                      registrationFormData.get('city')?.dirty)
+                  "
                   >City is Required</mat-error
                 >
               </mat-form-field>
             </div>
 
             <div class="flex sm:gap-3 flex-wrap xl:flex-nowrap">
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field class="w-full">
                 <mat-label>Enter Your Phone Number</mat-label>
                 <input
                   matInput
@@ -126,20 +161,24 @@
                 <mat-icon matSuffix>phone</mat-icon>
                 <mat-error
                   *ngIf="
-                    registrationFormData.hasError('required', 'phoneNumber')
+                    registrationFormData.hasError('required', 'phoneNumber') &&
+                    (registrationFormData.get('phoneNumber')?.touched ||
+                      registrationFormData.get('phoneNumber')?.dirty)
                   "
                   >Phone Number is Required</mat-error
                 >
 
                 <mat-error
                   *ngIf="
-                    registrationFormData.hasError('pattern', 'phoneNumber')
+                    registrationFormData.hasError('pattern', 'phoneNumber') &&
+                    (registrationFormData.get('phoneNumber')?.touched ||
+                      registrationFormData.get('phoneNumber')?.dirty)
                   "
                   >Invalid Phone Number</mat-error
                 >
               </mat-form-field>
 
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field class="w-full">
                 <mat-label>Enter Your Email Address</mat-label>
                 <input
                   matInput
@@ -149,13 +188,19 @@
                 <mat-icon matSuffix>mail</mat-icon>
                 <mat-error
                   *ngIf="
-                    registrationFormData.hasError('required', 'emailAddress')
+                    registrationFormData.hasError('required', 'emailAddress') &&
+                    (registrationFormData.get('emailAddress')?.touched ||
+                      registrationFormData.get('emailAddress')?.dirty)
                   "
                   >Email Address is Required</mat-error
                 >
 
                 <mat-error
-                  *ngIf="registrationFormData.hasError('email', 'emailAddress')"
+                  *ngIf="
+                    registrationFormData.hasError('email', 'emailAddress') &&
+                    (registrationFormData.get('emailAddress')?.touched ||
+                      registrationFormData.get('emailAddress')?.dirty)
+                  "
                   >Invalid Email Address</mat-error
                 >
               </mat-form-field>
@@ -166,15 +211,14 @@
               [ngClass]="{
               'mb-0':
                 registrationFormData.hasError('pattern', 'password') &&
-                registrationFormData.hasError('minlength', 'password'),
+                registrationFormData.hasError('minlength', 'password') ,
                 'sm:mb-6':
                 registrationFormData.hasError('pattern', 'password') &&
-                registrationFormData.hasError('minlength', 'password'),
+                registrationFormData.hasError('minlength', 'password') ,
                 
             }"
             >
               <mat-form-field
-                appearance="fill"
                 class="w-full"
                 [ngClass]="{
                 'mb-6':
@@ -207,25 +251,37 @@
                 </button>
 
                 <mat-error
-                  *ngIf="registrationFormData.hasError('required', 'password')"
+                  *ngIf="
+                    registrationFormData.hasError('required', 'password') &&
+                    (registrationFormData.get('password')?.touched ||
+                      registrationFormData.get('password')?.dirty)
+                  "
                 >
                   Password is Required
                 </mat-error>
 
                 <mat-error
-                  *ngIf="registrationFormData.hasError('minlength', 'password')"
+                  *ngIf="
+                    registrationFormData.hasError('minlength', 'password') &&
+                    (registrationFormData.get('password')?.touched ||
+                      registrationFormData.get('password')?.dirty)
+                  "
                 >
                   Password Should be Atleast 8 Character
                 </mat-error>
 
                 <mat-error
-                  *ngIf="registrationFormData.hasError('pattern', 'password')"
+                  *ngIf="
+                    registrationFormData.hasError('pattern', 'password') &&
+                    (registrationFormData.get('password')?.touched ||
+                      registrationFormData.get('password')?.dirty)
+                  "
                 >
                   Require 1 Uppercase and 1 special Character
                 </mat-error>
               </mat-form-field>
 
-              <mat-form-field appearance="fill" class="w-full">
+              <mat-form-field class="w-full">
                 <mat-label>Enter Your Confirm Password</mat-label>
                 <input
                   matInput
@@ -245,7 +301,12 @@
                 </button>
                 <mat-error
                   *ngIf="
-                    registrationFormData.hasError('required', 'confirmPassword')
+                    registrationFormData.hasError(
+                      'required',
+                      'confirmPassword'
+                    ) &&
+                    (registrationFormData.get('confirmPassword')?.touched ||
+                      registrationFormData.get('confirmPassword')?.dirty)
                   "
                   >Confirm Password is Required
                 </mat-error>
