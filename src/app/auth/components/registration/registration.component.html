@@ -123,11 +123,12 @@
                 <mat-icon matSuffix>add_business</mat-icon>
                 <mat-error
                   *ngIf="
-                    registrationFormData.hasError('required', 'shopName') &&
-                    (registrationFormData.get('shopName')?.touched ||
-                      registrationFormData.get('shopName')?.dirty)
+                    (registrationFormData.hasError('required', 'shopName') &&
+                      (registrationFormData.get('shopName')?.touched ||
+                        registrationFormData.get('shopName')?.dirty)) ||
+                    registrationFormData
                   "
-                  >First Name is Required</mat-error
+                  >Shop Name is Required</mat-error
                 >
               </mat-form-field>
 
@@ -348,10 +349,10 @@
                 mat-raised-button
                 color="primary"
                 class="w-full"
-                [disabled]="registrationFormData.invalid"
+                [disabled]="registrationFormData.invalid || isSubmitting"
                 (click)="Submit()"
               >
-                Register
+                {{ isSubmitting ? "Creating account..." : "Register" }}
               </button>
 
               <div class="text-center text-gray-400">
