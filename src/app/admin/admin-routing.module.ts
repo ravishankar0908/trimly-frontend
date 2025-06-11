@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
-import { authGuard } from '../auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -21,6 +20,12 @@ const routes: Routes = [
           import('./admin-profile/admin-profile.module').then(
             (m) => m.AdminProfileModule
           ),
+      },
+
+      {
+        path: 'users',
+        loadChildren: () =>
+          import('./user/user.module').then((m) => m.UserModule),
       },
     ],
   },
