@@ -15,7 +15,7 @@ export class SideBarComponent {
     {
       iconName: 'dashboard',
       menuName: 'Dashboard',
-      path: '../admin',
+      path: '../admin/dashboard',
     },
 
     {

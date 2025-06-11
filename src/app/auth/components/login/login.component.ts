@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../services/auth.service';
+import { UserRegistrationModel } from '../../models/user.registration.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,7 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private toasterService: ToastrService,
+    private authService: AuthService,
+    private routerService: Router
+  ) {}
 
   passwordHide: boolean = true;
   loginFormData!: FormGroup;
@@ -37,8 +46,28 @@ export class LoginComponent implements OnInit {
     if (this.loginFormData.invalid) {
       this.loginFormData.markAllAsTouched;
     } else {
-      console.log(this.loginFormData.value);
-      this.loginFormData.reset();
+      this.authService
+        .login(this.loginFormData.value as UserRegistrationModel)
+        .subscribe(
+          (res) => {
+            const jwtToken = res.jwtToken;
+            localStorage.setItem('jwtToken', jwtToken);
+            const role = this.authService.getRole();
+            if (role) localStorage.setItem('role', role);
+            this.routerService.navigate(['../admin/dashboard']);
+            this.loginFormData.reset();
+          },
+          (err) => {
+            if (
+              err.status === 400 ||
+              err.status === 404 ||
+              err.status === 403 ||
+              err.status === 500
+            ) {
+              this.toasterService.error(err.error.message, 'error');
+            }
+          }
+        );
     }
   }
 }
