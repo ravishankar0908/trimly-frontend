@@ -30,7 +30,6 @@ export class UsersDetailComponent implements OnInit {
   }
 
   getUserData() {
-    debugger;
     this.usersService.getAllUsersDetail().subscribe(
       (res) => {
         this.userData = res.data;
