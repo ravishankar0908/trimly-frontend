@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private routerService: Router
   ) {}
-
+  isLoggingIn: boolean = false;
   passwordHide: boolean = true;
   loginFormData!: FormGroup;
   signInWithGoogle() {
@@ -46,6 +46,7 @@ export class LoginComponent implements OnInit {
     if (this.loginFormData.invalid) {
       this.loginFormData.markAllAsTouched;
     } else {
+      this.isLoggingIn = true;
       this.authService
         .login(this.loginFormData.value as UserRegistrationModel)
         .subscribe(
@@ -53,8 +54,11 @@ export class LoginComponent implements OnInit {
             const jwtToken = res.jwtToken;
             localStorage.setItem('jwtToken', jwtToken);
             const role = this.authService.getRole();
-            if (role) localStorage.setItem('role', role);
-            this.routerService.navigate(['../admin/dashboard']);
+            if (role === 'admin') {
+              this.routerService.navigate(['../admin/dashboard']);
+              this.toasterService.success(res.message, 'success');
+            }
+            this.isLoggingIn = false;
             this.loginFormData.reset();
           },
           (err) => {

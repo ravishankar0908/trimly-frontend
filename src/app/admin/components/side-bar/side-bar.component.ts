@@ -21,11 +21,13 @@ export class SideBarComponent {
     {
       iconName: 'person',
       menuName: 'Users',
+      path: '../admin/users',
     },
 
     {
       iconName: 'shop',
       menuName: 'Shop Details',
+      path: '',
     },
   ];
 }

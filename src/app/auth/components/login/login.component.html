@@ -91,10 +91,10 @@
                 mat-raised-button
                 color="primary"
                 class="w-full"
-                [disabled]="loginFormData.invalid"
+                [disabled]="loginFormData.invalid || isLoggingIn"
                 (click)="Submit()"
               >
-                Login
+                {{ isLoggingIn ? "loading..." : "Login" }}
               </button>
 
               <div class="text-center text-gray-400">
