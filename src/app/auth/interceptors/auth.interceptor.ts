@@ -18,7 +18,10 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    if (request.url.includes('/refreshtoken')) {
+    if (
+      request.url.includes('/refreshtoken') ||
+      request.url.includes('auth/login')
+    ) {
       return next.handle(request);
     }
 

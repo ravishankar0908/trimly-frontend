@@ -1,0 +1,13 @@
+<ul class="flex flex-col py-3 gap-y-3">
+  <li
+    class="px-5 py-3 hover:bg-sky-800 hover:text-white flex items-center gap-x-5 hover:cursor-pointer"
+    *ngFor="let menu of sideBarMenu"
+    [routerLink]="menu.path"
+    routerLinkActive="bg-sky-600 text-white"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <mat-icon>{{ menu.iconName }}</mat-icon>
+    <span>{{ menu.menuName }}</span>
+  </li>
+  <hr />
+</ul>

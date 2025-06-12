@@ -57,6 +57,9 @@ export class LoginComponent implements OnInit {
             if (role === 'admin') {
               this.routerService.navigate(['../admin/dashboard']);
               this.toasterService.success(res.message, 'success');
+            } else if (role === 'user') {
+              this.routerService.navigate(['../user/']);
+              this.toasterService.success(res.message, 'success');
             }
             this.isLoggingIn = false;
             this.loginFormData.reset();

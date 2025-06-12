@@ -1,22 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminRoutingModule } from './admin-routing.module';
-import { HeaderComponent } from './components/header/header.component';
+
+import { UsersRoutingModule } from './users-routing.module';
+import { UserHeaderComponent } from './components/user-header/user-header.component';
+import { UserSidebarComponent } from './components/user-sidebar/user-sidebar.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { SideBarComponent } from './components/side-bar/side-bar.component';
 
 @NgModule({
-  declarations: [HeaderComponent, SideBarComponent],
+  declarations: [UserHeaderComponent, UserSidebarComponent],
   imports: [
     CommonModule,
-    AdminRoutingModule,
+    UsersRoutingModule,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
     MatSidenavModule,
   ],
 })
-export class AdminModule {}
+export class UsersModule {}
