@@ -128,34 +128,44 @@ export class RegistrationComponent implements OnInit {
 
       this.authService
         .Registration(this.registrationFormData.value as UserRegistrationModel)
-        .subscribe(
-          (res) => {
-            this.toaster.success(res.message, 'success');
-            this.registrationFormData.reset();
-            this.registrationFormData.markAsUntouched();
-            this.registrationFormData.markAsPristine();
-
-            Object.keys(this.registrationFormData.controls).forEach((key) => {
-              this.registrationFormData.get(key)?.setErrors(null);
-            });
-
-            this.registrationFormData.patchValue({
-              role: 'user',
-              termAndConditions: true,
-            });
+        .subscribe({
+          next: (res) => {
+            this.handleSuccess(res);
             this.isSubmitting = false;
-            this.router.navigate(['auth/login']);
+            this.handleRoute();
           },
-          (err) => {
+          error: (err) => {
             this.isSubmitting = false;
-            if (err.status === 409)
-              this.toaster.error(err.error.messages, 'error');
-            if (err.status === 406)
-              this.toaster.error(err.error.messages, 'error');
-            if (err.status === 500)
-              this.toaster.error(err.error.messages, 'error');
-          }
-        );
+            this.handleError(err);
+            this.toaster.error(err.error.messages, 'error');
+          },
+        });
     }
+  }
+
+  private handleSuccess(res: any) {
+    this.toaster.success(res.message, 'success');
+    this.registrationFormData.reset();
+    this.registrationFormData.markAsUntouched();
+    this.registrationFormData.markAsPristine();
+
+    Object.keys(this.registrationFormData.controls).forEach((key) => {
+      this.registrationFormData.get(key)?.setErrors(null);
+    });
+
+    this.registrationFormData.patchValue({
+      role: 'user',
+      termAndConditions: true,
+    });
+  }
+
+  private handleRoute() {
+    this.router.navigate(['auth/login']);
+  }
+
+  private handleError(err: any) {
+    const errorCodes = [409, 406, 500];
+    if (errorCodes.includes(err.status))
+      this.toaster.error(err.error.messages, 'error');
   }
 }

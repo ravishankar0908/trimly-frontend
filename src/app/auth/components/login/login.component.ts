@@ -44,37 +44,48 @@ export class LoginComponent implements OnInit {
 
   Submit() {
     if (this.loginFormData.invalid) {
-      this.loginFormData.markAllAsTouched;
+      this.loginFormData.markAllAsTouched();
     } else {
       this.isLoggingIn = true;
       this.authService
         .login(this.loginFormData.value as UserRegistrationModel)
-        .subscribe(
-          (res) => {
-            const jwtToken = res.jwtToken;
-            localStorage.setItem('jwtToken', jwtToken);
-            const role = this.authService.getRole();
-            if (role === 'admin') {
-              this.routerService.navigate(['../admin/dashboard']);
-              this.toasterService.success(res.message, 'success');
-            } else if (role === 'user') {
-              this.routerService.navigate(['../user/']);
-              this.toasterService.success(res.message, 'success');
-            }
+        .subscribe({
+          next: (res) => {
+            this.handleLoginSuccess(res);
             this.isLoggingIn = false;
-            this.loginFormData.reset();
           },
-          (err) => {
-            if (
-              err.status === 400 ||
-              err.status === 404 ||
-              err.status === 403 ||
-              err.status === 500
-            ) {
-              this.toasterService.error(err.error.message, 'error');
-            }
-          }
-        );
+          error: (err) => {
+            this.handleError(err);
+            this.isLoggingIn = false;
+          },
+        });
+    }
+  }
+
+  handleLoginSuccess(res: any) {
+    const jwtToken = res.jwtToken;
+    if (jwtToken) {
+      localStorage.setItem('jwtToken', jwtToken);
+      const role = this.authService.getRole();
+      if (role) {
+        this.redirectByRole(role, res.message);
+        this.toasterService.success(res.message, 'success');
+        this.loginFormData.reset();
+      }
+    }
+  }
+  handleError(err: any) {
+    const errorCodes = [400, 404, 403, 500];
+    if (errorCodes.includes(err.status)) {
+      this.toasterService.error(err.error.message, 'error');
+    }
+  }
+
+  redirectByRole(role: string, message: string) {
+    if (role === 'admin') {
+      this.routerService.navigate(['../admin/dashboard']);
+    } else if (role === 'user') {
+      this.routerService.navigate(['../users/']);
     }
   }
 }

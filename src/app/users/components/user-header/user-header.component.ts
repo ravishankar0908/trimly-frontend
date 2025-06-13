@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,11 +13,33 @@ export class UserHeaderComponent {
   constructor(
     private authService: AuthService,
     private toasterService: ToastrService,
-    private routerService: Router
+    private routerService: Router,
+    private breakPoint: BreakpointObserver
   ) {}
   displayName: string | null = '';
+  mode: 'side' | 'over' = 'side';
+  opened: boolean = true;
   ngOnInit(): void {
+    this.getScreenSize();
     this.displayName = this.authService.getRole();
+  }
+
+  private getScreenSize() {
+    this.breakPoint.observe([Breakpoints.Large, Breakpoints.XLarge]).subscribe({
+      next: (res) => {
+        this.handleSuccess(res);
+      },
+    });
+  }
+
+  private handleSuccess(res: any) {
+    if (res.matches) {
+      this.opened = true;
+      this.mode = 'side';
+    } else {
+      this.opened = false;
+      this.mode = 'over';
+    }
   }
 
   logout() {
