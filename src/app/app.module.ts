@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

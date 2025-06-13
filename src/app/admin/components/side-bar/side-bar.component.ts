@@ -27,7 +27,7 @@ export class SideBarComponent {
     {
       iconName: 'shop',
       menuName: 'Shop Details',
-      path: '',
+      path: '../admin/shops',
     },
   ];
 }
