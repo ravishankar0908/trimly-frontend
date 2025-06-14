@@ -16,12 +16,10 @@ export class UserHeaderComponent {
     private routerService: Router,
     private breakPoint: BreakpointObserver
   ) {}
-  displayName: string | null = '';
   mode: 'side' | 'over' = 'side';
   opened: boolean = true;
   ngOnInit(): void {
     this.getScreenSize();
-    this.displayName = this.authService.getRole();
   }
 
   private getScreenSize() {

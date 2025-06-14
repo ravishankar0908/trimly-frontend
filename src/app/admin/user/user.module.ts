@@ -4,6 +4,10 @@ import { UsersDetailComponent } from './components/users-detail/users-detail.com
 import { UserRoutingModule } from './user-routing.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [UsersDetailComponent],
   imports: [
@@ -11,6 +15,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     UserRoutingModule,
     MatTableModule,
     MatPaginatorModule,
+    MatCardModule,
+    MatButtonModule,
   ],
 })
 export class UserModule {}

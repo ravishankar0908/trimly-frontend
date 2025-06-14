@@ -21,7 +21,7 @@ export class UsersDetailComponent implements OnInit {
     'email',
     'gender',
     'phone',
-    'status',
+    'action',
   ];
   userData: any[] = [];
   dataSource = new MatTableDataSource<any>(this.userData);
