@@ -7,6 +7,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [UsersDetailComponent],
@@ -17,6 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatPaginatorModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
   ],
 })
 export class UserModule {}

@@ -36,10 +36,8 @@ export class AuthInterceptor implements HttpInterceptor {
       }
     }
 
-    console.log('Attempting token refresh');
     return this.refreshToken().pipe(
       switchMap((res: any) => {
-        console.log('Inside switchMap');
         const newToken = res.jwtToken;
         localStorage.setItem('jwtToken', newToken);
         const newRequest = this.headerRequest(request, newToken);
