@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopService } from '../../services/shop.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-shop-details',
@@ -12,8 +13,16 @@ export class ShopDetailsComponent implements OnInit {
     private shopService: ShopService,
     private toasterService: ToastrService
   ) {}
+  columnsToDisplay: string[] = [
+    'index',
+    'shopname',
+    'shopemail',
+    'shopcity',
+    'action',
+  ];
+  shopData: [] = [];
+  emptyCheck: boolean = false;
 
-  data: [] | string = [];
   ngOnInit(): void {
     this.getAllShopDetails();
   }
@@ -30,17 +39,34 @@ export class ShopDetailsComponent implements OnInit {
   }
 
   private handleSuccess(res: any) {
-    if (!res) {
-      this.data = 'no content';
-    } else {
-      this.data = res.data;
+    if (res) {
+      console.log(res.data.length);
+
+      const empty = this.isEmpty(res.data.length);
+      if (empty) {
+        this.emptyCheck = true;
+        return;
+      }
+      this.shopData = res.data;
     }
   }
 
   private handleError(err: any) {
     const statusCode = [404, 500];
+
     if (statusCode.includes(err.status)) {
       this.toasterService.error(err.error.message, 'error');
     }
+  }
+
+  private isEmpty(length: number) {
+    if (length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  editShop(id: any) {
+    alert(id);
   }
 }

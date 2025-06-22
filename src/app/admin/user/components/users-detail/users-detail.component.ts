@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
-import { ArrayDataSource } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -21,23 +20,57 @@ export class UsersDetailComponent implements OnInit {
     'email',
     'gender',
     'phone',
-    'status',
+    'action',
   ];
   userData: any[] = [];
-  dataSource = new MatTableDataSource<any>(this.userData);
+  emptyCheck: boolean = false;
   ngOnInit(): void {
     this.getUserData();
   }
 
-  getUserData() {
+  private getUserData() {
     this.usersService.getAllUsersDetail().subscribe(
       (res) => {
-        this.userData = res.data;
+        this.handleSuccess(res);
       },
       (err) => {
-        if (err.status === 404)
-          this.toasterService.error(err.error.message, 'error');
+        this.handleError(err);
       }
     );
+  }
+
+  private handleError(err: any) {
+    const statusCode = [404];
+    if (statusCode.includes(err.status)) {
+      const length = this.isEmpty(err.error.data.length);
+
+      if (length) {
+        this.emptyCheck = true;
+      }
+    }
+  }
+
+  private handleSuccess(res: any) {
+    const empty = this.isEmpty(res.data.length);
+    if (empty) {
+      this.emptyCheck = true;
+      return;
+    }
+    this.userData = res.data;
+  }
+
+  editUser(id: any) {
+    alert(id);
+  }
+
+  deleteUser(id: any) {
+    alert(id);
+  }
+
+  private isEmpty(row: number) {
+    if (row === 0) {
+      return true;
+    }
+    return false;
   }
 }

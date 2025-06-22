@@ -15,12 +15,10 @@ export class HeaderComponent implements OnInit {
     private routerService: Router,
     private breakpoint: BreakpointObserver
   ) {}
-  displayName: string | null = '';
   opened: boolean = true;
   mode: 'side' | 'over' = 'side';
   ngOnInit(): void {
     this.getScreenSize();
-    this.displayName = this.authService.getRole();
   }
 
   private getScreenSize() {
