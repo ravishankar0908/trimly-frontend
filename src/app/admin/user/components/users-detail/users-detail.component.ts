@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-users-detail',
@@ -8,10 +9,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./users-detail.component.scss'],
 })
 export class UsersDetailComponent implements OnInit {
-  constructor(
-    private usersService: UsersService,
-    private toasterService: ToastrService
-  ) {}
+  constructor(private usersService: UsersService) {}
+  pageLength: number = 0;
   displayedColumns: string[] = [
     'position',
     'firstName',
@@ -19,23 +18,30 @@ export class UsersDetailComponent implements OnInit {
     'email',
     'gender',
     'phone',
+    'created',
+    'modified',
     'action',
   ];
   userData: any[] = [];
   emptyCheck: boolean = false;
+  itemsPerPage: number = 10;
+  pageNumber: number = 1;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   ngOnInit(): void {
     this.getUserData();
   }
 
   private getUserData() {
-    this.usersService.getAllUsersDetail().subscribe(
-      (res) => {
-        this.handleSuccess(res);
-      },
-      (err) => {
-        this.handleError(err);
-      }
-    );
+    this.usersService
+      .getAllUsersDetail(this.itemsPerPage, this.pageNumber)
+      .subscribe({
+        next: (res) => {
+          this.handleSuccess(res);
+        },
+        error: (err) => {
+          this.handleError(err);
+        },
+      });
   }
 
   private handleError(err: any) {
@@ -51,6 +57,7 @@ export class UsersDetailComponent implements OnInit {
 
   private handleSuccess(res: any) {
     const empty = this.isEmpty(res.data.length);
+    this.pageLength = res.totalCount;
     if (empty) {
       this.emptyCheck = true;
       return;
@@ -71,5 +78,20 @@ export class UsersDetailComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  handlePaginator(event: PageEvent) {
+    this.itemsPerPage = event.pageSize;
+    this.pageNumber = event.pageIndex + 1;
+    this.usersService
+      .getAllUsersDetail(this.itemsPerPage, this.pageNumber)
+      .subscribe({
+        next: (res) => {
+          this.handleSuccess(res);
+        },
+        error: (err) => {
+          this.handleError(err);
+        },
+      });
   }
 }
