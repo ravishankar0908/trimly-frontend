@@ -11,7 +11,14 @@ export class ShopService {
 
   shopApi = shopApi.Shop_Api;
 
-  getAllshops(): Observable<any> {
-    return this.http.get(this.shopApi, { withCredentials: true });
+  getAllshops(length: number, pageNumber: number): Observable<any> {
+    console.log(length, pageNumber);
+
+    return this.http.get(
+      `${this.shopApi}/?pageNumber=${pageNumber}&itemsPerPage=${length}`,
+      {
+        withCredentials: true,
+      }
+    );
   }
 }

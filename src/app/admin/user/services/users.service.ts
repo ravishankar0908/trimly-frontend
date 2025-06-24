@@ -9,7 +9,10 @@ import { userApi } from '../environments/users.environment';
 export class UsersService {
   constructor(private http: HttpClient) {}
   userApi: string = userApi.User_Api;
-  getAllUsersDetail(): Observable<any> {
-    return this.http.get(this.userApi);
+  getAllUsersDetail(itemsPerPage: number, pageNumber: number): Observable<any> {
+    return this.http.get(
+      `${this.userApi}/?itemsPerPage=${itemsPerPage}&pageNumber=${pageNumber}`,
+      { withCredentials: true }
+    );
   }
 }
