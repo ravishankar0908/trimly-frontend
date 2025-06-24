@@ -10,18 +10,18 @@ export class UserSidebarComponent {
     {
       iconName: 'account_circle',
       menuName: 'Profile',
-      path: '',
+      path: '../users/profile',
     },
     {
       iconName: 'dashboard',
       menuName: 'Dashboard',
-      path: '',
+      path: '../users/dashboard',
     },
 
     {
       iconName: 'shop',
       menuName: 'Shop Details',
-      path: '',
+      path: '../users/shopdetails',
     },
   ];
 }

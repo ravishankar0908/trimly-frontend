@@ -6,6 +6,30 @@ const routes: Routes = [
   {
     path: '',
     component: UserHeaderComponent,
+    children: [
+      {
+        path: 'shopdetails',
+        loadChildren: () =>
+          import('./shop-details/shop-details.module').then(
+            (m) => m.ShopDetailsModule
+          ),
+      },
+
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./user-dashboard/user-dashboard.module').then(
+            (m) => m.UserDashboardModule
+          ),
+      },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./user-profile/user-profile.module').then(
+            (m) => m.UserProfileModule
+          ),
+      },
+    ],
   },
 ];
 
