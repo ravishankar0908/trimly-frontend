@@ -4,6 +4,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../services/auth.service';
 import { UserRegistrationModel } from '../../models/user.registration.model';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { MyDecodedToken } from '../../models/token.model';
+import { LoginModel } from '../../models/login.model';
 
 @Component({
   selector: 'app-login',
@@ -47,23 +50,22 @@ export class LoginComponent implements OnInit {
       this.loginFormData.markAllAsTouched();
     } else {
       this.isLoggingIn = true;
-      this.authService
-        .login(this.loginFormData.value as UserRegistrationModel)
-        .subscribe({
-          next: (res) => {
-            this.handleLoginSuccess(res);
-            this.isLoggingIn = false;
-          },
-          error: (err) => {
-            this.handleError(err);
-            this.isLoggingIn = false;
-          },
-        });
+      this.authService.login(this.loginFormData.value as LoginModel).subscribe({
+        next: (res) => {
+          this.handleLoginSuccess(res);
+          this.isLoggingIn = false;
+        },
+        error: (err) => {
+          this.handleError(err);
+          this.isLoggingIn = false;
+        },
+      });
     }
   }
 
   handleLoginSuccess(res: any) {
     const jwtToken = res.jwtToken;
+    this.TokenDecodedValues(jwtToken);
     if (jwtToken) {
       localStorage.setItem('jwtToken', jwtToken);
       const role = this.authService.getRole();
@@ -87,7 +89,14 @@ export class LoginComponent implements OnInit {
     } else if (role === 'user') {
       this.routerService.navigate(['../users/dashboard']);
     } else if (role === 'shopowner') {
-      this.routerService.navigate(['../shops/']);
+      this.routerService.navigate(['../shops/dashboard']);
+    }
+  }
+
+  TokenDecodedValues(token: any) {
+    if (token) {
+      const decodedToken = jwtDecode<MyDecodedToken>(token);
+      localStorage.setItem('id', decodedToken.id);
     }
   }
 }

@@ -44,7 +44,7 @@ export class UserHeaderComponent {
     this.authService.logout().subscribe((res) => {
       this.toasterService.success(res.message, 'success');
       localStorage.removeItem('jwtToken');
-      localStorage.removeItem('role');
+      localStorage.removeItem('id');
       this.routerService.navigate(['../auth/login']);
     });
   }

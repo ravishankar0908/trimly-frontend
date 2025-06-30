@@ -7,7 +7,22 @@ import { Component } from '@angular/core';
 })
 export class SidebarComponent {
   sideBarMenu = [
-    { iconName: 'home', menuName: 'Home', path: '' },
-    { iconName: 'account_circle', menuName: 'Profile', path: '' },
+    { iconName: 'home', menuName: 'Dashboard', path: '../shops/dashboard' },
+    {
+      iconName: 'account_circle',
+      menuName: 'Profile',
+      path: '../shops/profile',
+    },
+    { iconName: 'booking', menuName: 'Bookings', path: '../shops/bookings' },
+    {
+      iconName: 'add',
+      menuName: 'Add Stylist',
+      path: '../shops/stylist',
+    },
+    {
+      iconName: 'add',
+      menuName: 'Add Specialization',
+      path: '../shops/stylist/specialization',
+    },
   ];
 }

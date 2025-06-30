@@ -1,0 +1,57 @@
+<div class="h-full">
+  <div>
+    <h1>Add Specialization</h1>
+    <hr />
+  </div>
+  <div
+    class="mt-3 flex flex-col flex-wrap sm:flex-row gap-5 w-full min-h-fit boundary"
+  >
+    <mat-card class="w-fit">
+      <mat-card-content>
+        <div class="flex flex-wrap flex-col w-full">
+          <form [formGroup]="specialization">
+            <mat-form-field class="w-full">
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                formControlName="name"
+                placeholder="Enter the Specialization name"
+              />
+              <mat-error
+                *ngIf="specialization.get('name')?.hasError('required')"
+              >
+                Specialization is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+              <mat-label>Textarea</mat-label>
+              <textarea
+                matInput
+                formControlName="description"
+                placeholder="Enter Specialization Description"
+              ></textarea>
+              <mat-error
+                *ngIf="specialization.get('description')?.hasError('required')"
+              >
+                Description is required
+              </mat-error>
+            </mat-form-field>
+
+            <button
+              mat-raised-button
+              color="primary"
+              class="w-full"
+              [disabled]="specialization.invalid"
+              (click)="submitForm()"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <app-list-specialization />
+  </div>
+</div>
