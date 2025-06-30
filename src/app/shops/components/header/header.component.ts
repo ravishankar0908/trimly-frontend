@@ -1,29 +1,31 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Component({
-  selector: 'app-user-header',
-  templateUrl: './user-header.component.html',
-  styleUrls: ['./user-header.component.scss'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class UserHeaderComponent {
+export class HeaderComponent implements OnInit {
+  opened: boolean = true;
+  mode: 'side' | 'over' = 'side';
+
   constructor(
     private authService: AuthService,
     private toasterService: ToastrService,
     private routerService: Router,
-    private breakPoint: BreakpointObserver
+    private breakpoint: BreakpointObserver
   ) {}
-  mode: 'side' | 'over' = 'side';
-  opened: boolean = true;
+
   ngOnInit(): void {
     this.getScreenSize();
   }
 
   private getScreenSize() {
-    this.breakPoint.observe([Breakpoints.Large, Breakpoints.XLarge]).subscribe({
+    this.breakpoint.observe([Breakpoints.Large, Breakpoints.XLarge]).subscribe({
       next: (res) => {
         this.handleSuccess(res);
       },

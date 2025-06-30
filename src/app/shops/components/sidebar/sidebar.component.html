@@ -1,0 +1,16 @@
+<ul class="flex flex-col py-3 gap-y-3">
+  <ng-container *ngFor="let menu of sideBarMenu; let i = index">
+    <li
+      class="px-5 py-3 hover:bg-sky-800 hover:text-white flex items-center gap-x-5 hover:cursor-pointer"
+      [routerLink]="menu.path"
+      routerLinkActive="bg-sky-600 text-white"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <mat-icon>{{ menu.iconName }}</mat-icon>
+      <span>{{ menu.menuName }}</span>
+    </li>
+
+    <!-- Insert <hr> after every 3 items, but not after the last item -->
+    <hr *ngIf="(i + 1) % 3 === 0 && i + 1 !== sideBarMenu.length" />
+  </ng-container>
+</ul>

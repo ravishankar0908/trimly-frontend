@@ -1,0 +1,74 @@
+<div class="h-full">
+  <div>
+    <h1>Add New Stylist</h1>
+    <hr />
+  </div>
+  <div class="mt-3 h-auto min-h-[calc(100vh-160px)] boundary">
+    <div class="w-full h-full flex">
+      <mat-card class="w-full">
+        <mat-card-content>
+          <div class="flex gap-3 flex-wrap">
+            <mat-form-field class="w-full md:w-[calc(33.3%-12px)]">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Enter the stylist name" />
+            </mat-form-field>
+
+            <mat-form-field class="w-full md:w-[calc(33.3%-12px)]">
+              <mat-label>Gender</mat-label>
+              <mat-select #mode value="side" placeholder="Select Gender">
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+                <mat-option value="others">Others</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full md:w-[calc(34%-12px)]">
+              <mat-label>Date of Birth</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                [max]="currentDate"
+                placeholder="MM/DD/YYYY"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="w-full md:w-[calc(33.3%-12px)]">
+              <mat-label>Experience</mat-label>
+              <input
+                type="number"
+                matInput
+                placeholder="Enter the stylist Experience"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="w-full md:w-[calc(33.3%-12px)]">
+              <mat-label>stylist level</mat-label>
+              <mat-select #mode value="side" placeholder="Select stylist level">
+                <mat-option value="apprentice">Apprentice</mat-option>
+                <mat-option value="junior">junior stylist</mat-option>
+                <mat-option value="senior">Senior stylist</mat-option>
+                <mat-option value="master">Master stylist</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="w-full md:w-[calc(34%-12px)]">
+              <mat-label>Specialization</mat-label>
+              <mat-select multiple placeholder="Choose Specialization">
+                <mat-option
+                  *ngFor="let topping of dropdownItem"
+                  [value]="topping"
+                  >{{ topping }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
