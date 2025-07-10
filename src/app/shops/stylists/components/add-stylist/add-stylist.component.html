@@ -16,6 +16,9 @@
                   placeholder="Enter the stylist name"
                   formControlName="name"
                 />
+                <mat-error *ngIf="formData.get('name')?.hasError('required')"
+                  >Stylist name is required</mat-error
+                >
               </mat-form-field>
 
               <mat-form-field class="w-full md:w-[calc(33.3%-12px)]">
@@ -30,6 +33,10 @@
                   <mat-option value="female">Female</mat-option>
                   <mat-option value="others">Others</mat-option>
                 </mat-select>
+
+                <mat-error *ngIf="formData.get('gender')?.hasError('required')"
+                  >Gender is required</mat-error
+                >
               </mat-form-field>
 
               <mat-form-field class="w-full md:w-[calc(34%-12px)]">
@@ -46,6 +53,11 @@
                   [for]="picker"
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
+
+                <mat-error
+                  *ngIf="formData.get('dateofbirth')?.hasError('required')"
+                  >Date of Birth is required</mat-error
+                >
               </mat-form-field>
 
               <mat-form-field class="w-full md:w-[calc(33.3%-12px)]">
@@ -56,6 +68,11 @@
                   placeholder="Enter the stylist Experience"
                   formControlName="experience"
                 />
+
+                <mat-error
+                  *ngIf="formData.get('experience')?.hasError('required')"
+                  >Experience is required</mat-error
+                >
               </mat-form-field>
 
               <mat-form-field class="w-full md:w-[calc(33.3%-12px)]">
@@ -71,6 +88,10 @@
                   <mat-option value="senior">Senior stylist</mat-option>
                   <mat-option value="master">Master stylist</mat-option>
                 </mat-select>
+
+                <mat-error *ngIf="formData.get('level')?.hasError('required')"
+                  >Stylist level is required</mat-error
+                >
               </mat-form-field>
 
               <mat-form-field class="w-full md:w-[calc(34%-12px)]">
@@ -87,6 +108,11 @@
                     >{{ specialization }}</mat-option
                   >
                 </mat-select>
+
+                <mat-error
+                  *ngIf="formData.get('specialization')?.hasError('required')"
+                  >Stylist specialization is required</mat-error
+                >
               </mat-form-field>
 
               <button
@@ -94,6 +120,7 @@
                 [disabled]="formData.invalid"
                 mat-raised-button
                 color="primary"
+                class="w-full"
               >
                 Submit
               </button>

@@ -34,7 +34,11 @@ export class AddStylistComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formData.value);
+    if (this.formData.invalid) {
+    } else {
+      console.log(this.formData.value);
+      this.formData.reset();
+    }
   }
 
   getDropDown() {
