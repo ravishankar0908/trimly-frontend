@@ -15,6 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ListSpecializationComponent } from './components/list-specialization/list-specialization.component';
 import { ListStylistsComponent } from './components/list-stylists/list-stylists.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [
     AddStylistComponent,
@@ -34,6 +36,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule,
   ],
 })
 export class StylistsModule {}

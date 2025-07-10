@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SpecializationModel } from '../../models/addSpecialization.model';
 import { SpecializationService } from '../../service/specialization.service';
 import { ToastrService } from 'ngx-toastr';
+import { ListSpecializationComponent } from '../list-specialization/list-specialization.component';
 
 @Component({
   selector: 'app-add-specialization',
@@ -12,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 export class AddSpecializationComponent implements OnInit {
   specialization!: FormGroup;
   decodedToken: any = '';
+  @ViewChild(ListSpecializationComponent)
+  listComponent!: ListSpecializationComponent;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,8 +45,6 @@ export class AddSpecializationComponent implements OnInit {
           error: (err) => {},
         });
     }
-
-    console.log(this.specialization.value as SpecializationModel);
     this.specialization.reset();
     this.removeErrors();
     this.getFormData();
@@ -57,5 +58,6 @@ export class AddSpecializationComponent implements OnInit {
 
   handleSuccess(res: any) {
     this.toaster.success(res.message, 'created');
+    this.listComponent.refreshData();
   }
 }
