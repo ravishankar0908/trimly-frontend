@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { SpecializationService } from '../../service/specialization.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { StylistService } from '../../service/stylist.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-add-stylist',
   templateUrl: './add-stylist.component.html',
@@ -14,7 +16,9 @@ export class AddStylistComponent implements OnInit {
 
   constructor(
     private specializationService: SpecializationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private stylistService: StylistService,
+    private toasterService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +41,12 @@ export class AddStylistComponent implements OnInit {
     if (this.formData.invalid) {
     } else {
       console.log(this.formData.value);
+      this.stylistService.insertStylist(this.formData.value).subscribe({
+        next: (res) => {
+          this.handleSuccess(res);
+        },
+        error: (err) => {},
+      });
       this.formData.reset();
     }
   }
@@ -53,5 +63,10 @@ export class AddStylistComponent implements OnInit {
     this.dropdownItem = res.data.map((items: any) => {
       return items.name;
     });
+  }
+
+  handleSuccess(res: any) {
+    console.log(res);
+    this.toasterService.success(res.message, 'success');
   }
 }

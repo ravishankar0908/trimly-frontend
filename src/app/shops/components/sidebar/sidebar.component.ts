@@ -19,6 +19,12 @@ export class SidebarComponent {
       menuName: 'Add Stylist',
       path: '../shops/stylist',
     },
+
+    {
+      iconName: 'view_timeline',
+      menuName: 'View Stylist',
+      path: '../shops/stylist/view-stylist',
+    },
     {
       iconName: 'add',
       menuName: 'Add Specialization',
