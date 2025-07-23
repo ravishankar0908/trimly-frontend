@@ -7,9 +7,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { DeleteDialogComponent } from './components/delete-dialog/delete-dialog.component';
 
 @NgModule({
-  declarations: [HeaderComponent, SideBarComponent],
+  declarations: [HeaderComponent, SideBarComponent, DeleteDialogComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

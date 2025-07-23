@@ -12,13 +12,19 @@ export class ShopService {
   shopApi = shopApi.Shop_Api;
 
   getAllshops(length: number, pageNumber: number): Observable<any> {
-    console.log(length, pageNumber);
-
     return this.http.get(
       `${this.shopApi}/?pageNumber=${pageNumber}&itemsPerPage=${length}`,
       {
         withCredentials: true,
       }
+    );
+  }
+
+  deleteShopById(id: any): Observable<any> {
+    return this.http.patch(
+      `${this.shopApi}/delete?userId=${id}`,
+      {},
+      { withCredentials: true }
     );
   }
 }

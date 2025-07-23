@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SpecializationService } from '../../service/specialization.service';
-import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-list-specialization',
@@ -14,6 +14,7 @@ export class ListSpecializationComponent implements OnInit {
   itemsPerPage: number = 5;
   pageNumber: number = 1;
   pageLength: number = 0;
+  currentPageIndex: number = 0;
   constructor(private specializationService: SpecializationService) {}
 
   ngOnInit(): void {
@@ -49,6 +50,8 @@ export class ListSpecializationComponent implements OnInit {
   handlePaginator(event: PageEvent) {
     this.itemsPerPage = event.pageSize;
     this.pageNumber = event.pageIndex + 1;
+    this.currentPageIndex = event.pageIndex;
+
     this.specializationService
       .getSpecialization(this.itemsPerPage, this.pageNumber)
       .subscribe({

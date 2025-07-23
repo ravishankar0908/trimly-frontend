@@ -61,6 +61,7 @@
               <button
                 matTooltip="delete shop detail"
                 mat-mini-fab
+                (click)="openDeleteDialog(shop._id)"
                 class="!bg-red-600 ml-2"
               >
                 <mat-icon>delete</mat-icon>
@@ -104,6 +105,7 @@
               <button
                 matTooltip="delete shop detail"
                 mat-mini-fab
+                (click)="openDeleteDialog(shop._id)"
                 class="!bg-red-600 ml-2"
               >
                 <mat-icon>delete</mat-icon>

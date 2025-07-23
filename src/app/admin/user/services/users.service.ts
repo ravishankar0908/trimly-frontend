@@ -15,4 +15,12 @@ export class UsersService {
       { withCredentials: true }
     );
   }
+
+  deleteUserById(id: any): Observable<any> {
+    return this.http.patch(
+      `${this.userApi}/delete?userId=${id}`,
+      {},
+      { withCredentials: true }
+    );
+  }
 }

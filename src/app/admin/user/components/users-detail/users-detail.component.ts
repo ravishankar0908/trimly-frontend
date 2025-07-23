@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from 'src/app/admin/components/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-users-detail',
@@ -9,7 +11,11 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
   styleUrls: ['./users-detail.component.scss'],
 })
 export class UsersDetailComponent implements OnInit {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private usersService: UsersService,
+    private dialog: MatDialog,
+    private toaster: ToastrService
+  ) {}
   pageLength: number = 0;
   displayedColumns: string[] = [
     'position',
@@ -69,10 +75,6 @@ export class UsersDetailComponent implements OnInit {
     alert(id);
   }
 
-  deleteUser(id: any) {
-    alert(id);
-  }
-
   private isEmpty(row: number) {
     if (row === 0) {
       return true;
@@ -93,5 +95,25 @@ export class UsersDetailComponent implements OnInit {
           this.handleError(err);
         },
       });
+  }
+
+  openDeleteDialog(id: any) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      height: '170px',
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.usersService.deleteUserById(id).subscribe({
+          next: (res) => {
+            this.toaster.success(res.message, 'deleted');
+            this.getUserData();
+          },
+          error: (err) => {},
+        });
+      }
+    });
   }
 }
