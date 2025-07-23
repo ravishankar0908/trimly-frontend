@@ -19,4 +19,12 @@ export class ShopService {
       }
     );
   }
+
+  deleteShopById(id: any): Observable<any> {
+    return this.http.patch(
+      `${this.shopApi}/delete?userId=${id}`,
+      {},
+      { withCredentials: true }
+    );
+  }
 }

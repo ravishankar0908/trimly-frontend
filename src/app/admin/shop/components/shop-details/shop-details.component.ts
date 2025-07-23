@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShopService } from '../../services/shop.service';
 import { ToastrService } from 'ngx-toastr';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteDialogComponent } from 'src/app/admin/components/delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-shop-details',
@@ -11,7 +13,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 export class ShopDetailsComponent implements OnInit {
   constructor(
     private shopService: ShopService,
-    private toasterService: ToastrService
+    private toasterService: ToastrService,
+    private dialog: MatDialog
   ) {}
   columnsToDisplay: string[] = [
     'index',
@@ -80,6 +83,26 @@ export class ShopDetailsComponent implements OnInit {
       error: (err) => {
         this.handleError(err);
       },
+    });
+  }
+
+  openDeleteDialog(id: any) {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      height: '170px',
+      width: '400px',
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.shopService.deleteShopById(id).subscribe({
+          next: (res) => {
+            this.toasterService.success(res.message, 'Deleted');
+            this.getAllShopDetails();
+          },
+          error: (err) => {},
+        });
+      }
     });
   }
 }

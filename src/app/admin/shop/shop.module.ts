@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [ShopDetailsComponent],
@@ -21,6 +22,7 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatTooltipModule,
     MatCardModule,
+    MatDialogModule,
   ],
 })
 export class ShopModule {}

@@ -1,0 +1,22 @@
+<div class="p-5 flex flex-col justify-center h-full gap-3">
+  <div>
+    <p class="text-2xl">Confirmation</p>
+    <p class="text-base">Are you sure? this will delete the data</p>
+  </div>
+  <div class="gap-2 flex justify-end">
+    <button
+      mat-raised-button
+      class="!bg-red-600 !text-white"
+      (click)="closeDialog()"
+    >
+      cancel
+    </button>
+    <button
+      mat-raised-button
+      class="!bg-green-600 !text-white"
+      (click)="confirmDelete()"
+    >
+      Yes, delete
+    </button>
+  </div>
+</div>
